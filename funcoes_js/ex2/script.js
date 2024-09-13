@@ -2,23 +2,24 @@
 considerando que o usuário não pode informar letras, palavras ou vazio.
 Alerte-o do erro e repita a leitura das notas caso ocorra.*/
 
-function notas() {
-    let numeros = [];
+function lerNotas() {
+    let notas = [];
+    let soma = 0;
+    let media =0;
     for (let i = 0; i < 4; i++) {
-        let nota1 = prompt("Informe a primeira nota:");
-        let nota2 = prompt("Informe a segunda nota:");
-        let nota3 = prompt("Informe a terceira nota:");
-        let nota4 = prompt("Informe a quarta nota:");
+        let nota = prompt(`Digite a nota ${i + 1}: `);
 
-        if (infoNumero === null || infoNumero.trim() === "" || isNaN(infoNumero)) {
-            alert("Entrada inválida. Por favor, digite um número inteiro.");
-            i--;
-        } else {
-            numeros.push(parseInt(infoNumero));
+        while (isNaN(nota) || nota.trim() === "") {
+            alert("Só é permitido números. Tente novamente.");
+            nota = prompt(`Digite a nota ${i + 1}:`);
         }
+        nota = parseFloat(nota);
+        notas.push(nota);
+        soma += nota;
     }
+    media = soma / notas.length;
 
-    alert("Os números digitados foram: " + numeros.join(", ") + ".");
+    alert(`Notas: ${notas.join(", ")}. \n Média: ${media.toFixed(2)}`);
 }
 
-lerNumero();
+lerNotas();
