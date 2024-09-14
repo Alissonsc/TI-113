@@ -1,30 +1,38 @@
-/* Crie um algoritmo que leia um vetor de 10 letras, 
-e diga quantas consoantes foram lidas e mostre essas consoantes. */
+/*Crie um algoritmo usando funções que tenha um cadastro
+de nomes e salários bruto de até 50 pessoas, há um menu
+de continuação ou parada do cadastro e na parada final,
+mostre os nomes, salários brutos e os salários líquidos
+de todos que foram lidos, considerando 10% de INSS a descontar.*/
 
-let letras = [];
-let contador = 0;
-let mensagem = "";
+function cadastrarPessoas() {
+    let pessoas = [];
+    let continuar = true;
 
-//leitura de uma letra no vetor de letras
-for (let i = 0; i < 10; i++) {
-    let letra = prompt("Informe uma Letra: ");
-    letras.push(letra);
-}
+    while (pessoas.length < 50 && continuar) {
+        let nome = prompt("Digite o nome da pessoa:");
+        let salarioBruto = parseFloat(prompt("Digite o salário bruto da pessoa:"));
+        pessoas.push({ nome: nome, salarioBruto: salarioBruto });
 
-for (let j = 0; j < letras.length; j++) {
-    //converto o texto pra maiúsculo
-    let letra = letras[j].toUpperCase();
-    //Verifico se tem alguma vogal
-    let temA = (letra == "A"); // true ou false
-    let temE = (letra == "E"); // true ou false
-    let temI = (letra == "I"); // true ou false
-    let temO = (letra == "O"); // true ou false
-    let temU = (letra == "U"); // true ou false
-    
-    //se tiver alguma vogal ele não entra no if
-    if ((temA || temE || temI || temO || temU) == false) {
-        contador += 1;
-        mensagem += letra + "\n";
+        continuar = confirm("Deseja continuar o cadastro?");
     }
+
+    return pessoas;
 }
-alert(mensagem + "\n" + "Teve " + contador + " Consoantes!");
+
+function calcularSalarioLiquido(salarioBruto) {
+    return salarioBruto * 0.9;
+}
+
+function mostrarPessoas(pessoas) {
+    pessoas.forEach(pessoa => {
+        let salarioLiquido = calcularSalarioLiquido(pessoa.salarioBruto);
+        console.log(`Nome: ${pessoa.nome}, Salário Bruto: ${pessoa.salarioBruto.toFixed(2)}, Salário Líquido: ${salarioLiquido.toFixed(2)}`);
+    });
+}
+
+function main() {
+    let pessoas = cadastrarPessoas();
+    mostrarPessoas(pessoas);
+}
+
+main();
