@@ -4,35 +4,40 @@ de continuação ou parada do cadastro e na parada final,
 mostre os nomes, salários brutos e os salários líquidos
 de todos que foram lidos, considerando 10% de INSS a descontar.*/
 
-function cadastrarPessoas() {
+function cadastro() {
     let pessoas = [];
     let continuar = true;
+    let salarioBruto = [];
+    let INSS = 0.9;
+    while (continuar && pessoas.length < 50) {
 
-    while (pessoas.length < 50 && continuar) {
-        let nome = prompt("Digite o nome da pessoa:");
-        let salarioBruto = parseFloat(prompt("Digite o salário bruto da pessoa:"));
-        pessoas.push({ nome: nome, salarioBruto: salarioBruto });
+        let nome = prompt("Informe o nome: ");
+        if (nome.trim() === "") {
+            alert("Nome não pode estar em branco. Tente novamente.");
+            continue;
+        }
+        pessoas.push(nome);
 
-        continuar = confirm("Deseja continuar o cadastro?");
+        let salario = parseFloat(prompt("Informe o salário bruto:"));
+        if (isNaN(salario) || salario < 0) {
+            alert("Salário inválido. Insira um número positivo.");
+            pessoas.pop();
+            continue;
+        }
+        salarioBruto.push(salario);
+
+        continuar = confirm("Deseja cadastrar outra pessoa? OK = para continuar cadastrando ou  CANCELAR = Para parar de cadastrar")
+        if (!continuar) {
+            break;
+        }
+    }
+    let mensagem = "Cadastro finalizado. Dados das pessoas cadastradas:\n";
+    for (let i = 0; i < pessoas.length; i++) {
+        let salarioLiquido = salarioBruto[i] * INSS;
+        mensagem += `Nome: ${pessoas[i]}, Salário Bruto: R$${salarioBruto[i].toFixed(2)}, Salário Líquido: R$${salarioLiquido.toFixed(2)}\n`;
     }
 
-    return pessoas;
+    alert(mensagem);
 }
 
-function calcularSalarioLiquido(salarioBruto) {
-    return salarioBruto * 0.9;
-}
-
-function mostrarPessoas(pessoas) {
-    pessoas.forEach(pessoa => {
-        let salarioLiquido = calcularSalarioLiquido(pessoa.salarioBruto);
-        console.log(`Nome: ${pessoa.nome}, Salário Bruto: ${pessoa.salarioBruto.toFixed(2)}, Salário Líquido: ${salarioLiquido.toFixed(2)}`);
-    });
-}
-
-function main() {
-    let pessoas = cadastrarPessoas();
-    mostrarPessoas(pessoas);
-}
-
-main();
+cadastro();

@@ -55,8 +55,11 @@ function exibirMenuExibicao(numeros) {
         } else {
             alert("Opção inválida. Tente novamente.");
         }
+        let continuar = true;
+        continuar = confirm("Deseja continuar, clique OK ou Cancelar para sair.");
     }
 }
+
 
 function main() {
     let quantidade = exibirMenuCadastro();
